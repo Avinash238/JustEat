@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Profile - JustEat</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container mt-5">
+    <h2>My Profile</h2>
+    <form method="POST">
+      <!-- Name -->
+      <div class="mb-3">
+        <label class="form-label">Name</label>
+        <input type="text" class="form-control" name="name" value="{{ customer.name }}" required>
+      </div>
+
+      <!-- Email -->
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-control" name="email" value="{{ customer.email }}" required>
+      </div>
+
+      <!-- Phone -->
+      <div class="mb-3">
+        <label class="form-label">Phone</label>
+        <input type="text" class="form-control" name="phone" value="{{ customer.phone }}">
+      </div>
+
+      <!-- Password -->
+      <div class="mb-3">
+        <label class="form-label">Password</label>
+        <input type="password" class="form-control" name="password" placeholder="Enter new password if you want to change">
+      </div>
+
+      <!-- Favourite Food -->
+      <div class="mb-3">
+        <label class="form-label">Dietary Restrictions</label>
+        <input type="text" class="form-control" name="favourite_food" value="{{ customer.dietary_restrictions }}">
+      </div>
+
+      <!-- Favourite Restaurant -->
+      <div class="mb-3">
+        <label class="form-label">Favourite Restaurant</label>
+        <input type="text" class="form-control" name="favourite_restaurant" value="{{ customer.favourite_restaurant }}">
+      </div>
+
+      <!-- Favourite Cuisine -->
+      <div class="mb-3">
+        <label class="form-label">Favourite Cuisine</label>
+        <input type="text" class="form-control" name="favourite_cuisine" value="{{ customer.favourite_cuisine }}">
+      </div>
+
+      <!-- Buttons -->
+      <button type="submit" class="btn btn-success">Update Profile</button>
+      <a href="{{ url_for('customer_dashboard') }}" class="btn btn-secondary">Back to Home</a>
+    </form>
+  </div>
+</body>
+</html>

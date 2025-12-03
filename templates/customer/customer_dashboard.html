@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Dashboard - JustEat</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    body { background-color: #f8f9fa; font-family: Arial, sans-serif; }
+    .restaurant-card { border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 30px; transition: transform .3s ease; }
+    .restaurant-card:hover { transform: translateY(-10px); }
+    .restaurant-card .btn { background-color: #4CAF50; color: #fff; border-radius: 5px; }
+    .restaurant-card .btn:hover { background-color: #45a049; }
+    .rating { color: #ffc107; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="bg-primary text-white text-center py-3">
+    <h1>Welcome, {{ session.get('user') }}</h1>
+  </header>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+    <div class="container">
+      <a class="navbar-brand" href="{{ url_for('customer_dashboard') }}">Home</a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('customer_orders_history') }}">Order History</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('customer_profile') }}">Profile</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('customer_order_reviews') }}">Order Reviews</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('customer_restaurant_ratings') }}">Restaurant Ratings</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('customer_cart') }}">
+              <i class="bi bi-cart"></i> Cart
+              {% if session.get('cart') %}
+                <span class="badge bg-danger">{{ session['cart']|length }}</span>
+              {% endif %}
+            </a>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Filters -->
+  <div class="container mt-4">
+    <div class="card p-3 mb-4">
+      <form method="get" action="{{ url_for('customer_dashboard') }}" class="row g-3 align-items-end">
+        <div class="col-md-3">
+          <label class="form-label">Name</label>
+          <input type="text" class="form-control" name="name" value="{{ name_filter }}">
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Address</label>
+          <input type="text" class="form-control" name="address" value="{{ address_filter }}">
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Cuisine</label>
+            <input type="text" class="form-control" name="cuisine" value="{{ selected_cuisine }}">
+        </div>
+
+        <div class="col-md-3">
+          <button type="submit" class="btn btn-primary w-100">Apply Filters</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Restaurants Grid -->
+    <div class="row">
+      {% for restaurant in restaurants %}
+      <div class="col-md-4">
+        <div class="card restaurant-card">
+          <div class="card-body">
+            <h5 class="card-title">{{ restaurant.name }}</h5>
+            <p><strong>Address:</strong> {{ restaurant.address }}</p>
+            <p class="rating">⭐ {{ "%.1f"|format(restaurant.avg_rating) }} Rated</p>
+            <a href="{{ url_for('restaurant_menu', restaurant_id=restaurant.restaurant_id) }}" class="btn btn-success">View Menu</a>
+          </div>
+        </div>
+      </div>
+      {% else %}
+      <div class="col-12">
+        <p class="text-muted">No restaurants found.</p>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Deal of the Day -->
+    <div class="mt-5">
+      <h4>🔥 Deal of the Day</h4>
+      <div class="row">
+        {% for item in deals %}
+        <div class="col-md-4">
+          <div class="card mb-3">
+            <div class="card-body">
+              <h6>{{ item.name }}</h6>
+              <p>From <strong>{{ item.restaurant_name }}</strong></p>
+              <p><strong>₹{{ item.price }}</strong></p>
+            </div>
+          </div>
+        </div>
+        {% else %}
+        <p class="text-muted">No deals today.</p>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Recommended Items -->
+    <div class="mt-5">
+      <h4>⭐ Recommended for You</h4>
+      <div class="row">
+        {% for item in recommendations %}
+        <div class="col-md-4">
+          <div class="card mb-3">
+            <div class="card-body">
+              <h6>{{ item.name }}</h6>
+              <p>From <strong>{{ item.restaurant_name }}</strong></p>
+              <p><strong>₹{{ item.price }}</strong></p>
+            </div>
+          </div>
+        </div>
+        {% else %}
+        <p class="text-muted">No recommendations yet.</p>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</body>
+</html>

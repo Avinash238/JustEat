@@ -1,10 +1,10 @@
-# 🍽️ JustEat — Food Ordering Web Application
+# JustEat — Food Ordering Web Application
 
 JustEat is a Flask + MySQL based food ordering application with role-based login for Customers and Restaurant Owners. Users can browse restaurants/menus, add items to cart, and place orders, while restaurant owners can manage menu items and process customer orders.
 
 ---
 
-## 🚀 How to Run the Application
+## How to Run the Application
 
 1. **Clone the repository**
 
@@ -25,13 +25,13 @@ JustEat is a Flask + MySQL based food ordering application with role-based login
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 - Python (Flask)
 - MySQL
 - HTML, CSS, Bootstrap
 
 ---
 
-## 📌 Notes
+## Notes
 - Login is role-based (Customer and Restaurant Owner).
 - MySQL must be running locally before launching the app.

@@ -7,8 +7,6 @@ JustEat is a Flask + MySQL based food ordering application with role-based login
 ## 🚀 How to Run the Application
 
 1. **Clone the repository**
-   git clone https://github.com/Avinash238/JustEat.git
-   cd JustEat
 
 2. **Install dependencies**
    pip install -r requirements.txt
